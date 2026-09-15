@@ -1,0 +1,61 @@
+graph:
+  backend: json
+  json_path: ./graph.json
+  case_type: case
+  knowledge_type: knowledge
+  assessment_type: assessment_point
+  case_to_knowledge_relations: [COVERS_KNOWLEDGE]
+  case_to_assessment_relations: [ASSESSES]
+  case_target_direction: outgoing
+  ability_to_knowledge_relations: [REQUIRES_KNOWLEDGE]
+  ability_to_knowledge_direction: outgoing
+  case_similarity_relations: [SIMILAR_CASE]
+  case_similarity_direction: both
+  case_progression_relations: [NEXT_CASE]
+  case_progression_direction: outgoing
+  transfer_relations: [PREREQUISITE_FOR, EVIDENCE_FOR]
+  transfer_direction: incoming
+
+llm:
+  api_key_env: ELENCHIX_LLM_API_KEY
+  base_url_env: ELENCHIX_LLM_BASE_URL
+  planning:
+    model: qwen-plus
+    temperature: 0.0
+    api_key_env: ELENCHIX_PLANNING_API_KEY
+    base_url_env: ELENCHIX_PLANNING_BASE_URL
+  teaching:
+    model: qwen-plus
+    temperature: 0.2
+    api_key_env: ELENCHIX_TEACHING_API_KEY
+    base_url_env: ELENCHIX_TEACHING_BASE_URL
+  assessment:
+    model: qwen-plus
+    temperature: 0.0
+    api_key_env: ELENCHIX_ASSESSMENT_API_KEY
+    base_url_env: ELENCHIX_ASSESSMENT_BASE_URL
+
+kt:
+  online_refit: false
+  online_state_path: null
+  # Smoke demo only. Configure the two paths below for trained inference.
+  checkpoint_path: null
+  vocab_path: null
+  allow_untrained_demo: true
+  device: cpu
+  d_model: 32
+  n_blocks: 1
+  dropout: 0.05
+  d_ff: 64
+  final_fc_dim: 64
+  num_attn_heads: 4
+  # Demo coefficients only. Fit these on training learners for real use.
+  relation_reliability:
+    PREREQUISITE_FOR: {binary: 0.8}
+    EVIDENCE_FOR: {binary: 0.6}
+  readout_weights: [0.12, 0.05]
+  readout_rms: [0.20, 0.40]
+
+agents:
+  max_candidate_cases: 20
+  max_planning_tool_steps: 8

@@ -1,0 +1,34 @@
+graph:
+  backend: json
+  json_path: ../private_graph/g0_live.json
+  case_to_knowledge_relations: [G0_CASE_KP]
+  case_to_assessment_relations: [G0_CASE_ASSESSMENT]
+  ability_to_knowledge_relations: [G0_REQUIRES_KNOWLEDGE]
+  case_similarity_relations: [SIMILAR_CASE]
+  case_progression_relations: [NEXT_CASE]
+  # List the directed Knowledge-to-Knowledge relations in your JSON graph.
+  transfer_relations: [ASSESSMENT_VARIANT_OF, DIFFERENTIAL_WITH, EVIDENCE_FOR, INDICATION_FOR, MANAGED_BY, MONITORED_BY, PREREQUISITE_FOR, TEST_FOR]
+  transfer_direction: incoming
+llm:
+  planning:
+    model: YOUR_PLANNING_MODEL
+    api_key_env: ELENCHIX_PLANNING_API_KEY
+    base_url_env: ELENCHIX_PLANNING_BASE_URL
+  teaching:
+    model: YOUR_FINE_TUNED_TEACHING_MODEL
+    temperature: 0.2
+    api_key_env: ELENCHIX_TEACHING_API_KEY
+    base_url_env: ELENCHIX_TEACHING_BASE_URL
+  assessment:
+    model: YOUR_ASSESSMENT_MODEL
+    api_key_env: ELENCHIX_ASSESSMENT_API_KEY
+    base_url_env: ELENCHIX_ASSESSMENT_BASE_URL
+kt:
+  online_refit: true
+  online_state_path: ../artifacts/live_test/state.sqlite3
+  online_epochs: 20
+  online_seed_offsets: [0, 1009, 2027, 3037, 4051]
+  device: cpu
+agents:
+  experiment_topic: null
+  study_group: unspecified

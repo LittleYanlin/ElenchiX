@@ -1,0 +1,33 @@
+from __future__ import annotations
+
+from collections.abc import Sequence
+from typing import Literal, Protocol
+
+from elenchix.schemas import GraphEdge, GraphNode
+
+
+class GraphStore(Protocol):
+    def list_knowledge(self) -> Sequence[GraphNode]: ...
+
+    def list_abilities(self) -> Sequence[GraphNode]: ...
+
+    def list_cases(self) -> Sequence[GraphNode]: ...
+
+    def get_node(self, node_id: str) -> GraphNode | None: ...
+
+    def case_targets(self, case_id: str) -> Sequence[GraphNode]: ...
+
+    def case_subgraph(self, case_id: str) -> dict: ...
+
+    def ability_knowledge(self, ability_id: str) -> Sequence[GraphNode]: ...
+
+    def transfer_edges(self, target_id: str) -> Sequence[GraphEdge]: ...
+
+    def edges_for_node(
+        self,
+        node_id: str,
+        relation_types: Sequence[str],
+        direction: Literal["incoming", "outgoing", "both"] = "both",
+    ) -> Sequence[GraphEdge]: ...
+
+    def close(self) -> None: ...

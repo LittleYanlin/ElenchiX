@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "nodes": [
+    {
+      "id": "case_demo_01",
+      "type": "case",
+      "name": "Fictional case A",
+      "attributes": {
+        "vignette": "A fictional adult presents with exertional discomfort. Ask for a structured initial assessment."
+      }
+    },
+    {
+      "id": "case_demo_02",
+      "type": "case",
+      "name": "Fictional case B",
+      "attributes": {
+        "vignette": "A fictional adult presents with transient shortness of breath. Compare plausible mechanisms."
+      }
+    },
+    {"id": "kp_demo_history", "type": "knowledge", "name": "Focused history"},
+    {"id": "kp_demo_evidence", "type": "knowledge", "name": "Evidence interpretation"},
+    {"id": "kp_demo_differential", "type": "knowledge", "name": "Differential construction"},
+    {"id": "ap_demo_hypothesis", "type": "assessment_point", "name": "Hypothesis generation"},
+    {"id": "ap_demo_justification", "type": "assessment_point", "name": "Justification quality"}
+  ],
+  "edges": [
+    {"source": "ap_demo_hypothesis", "target": "kp_demo_history", "type": "REQUIRES_KNOWLEDGE"},
+    {"source": "ap_demo_hypothesis", "target": "kp_demo_differential", "type": "REQUIRES_KNOWLEDGE"},
+    {"source": "ap_demo_justification", "target": "kp_demo_evidence", "type": "REQUIRES_KNOWLEDGE"},
+    {"source": "case_demo_01", "target": "kp_demo_history", "type": "COVERS_KNOWLEDGE"},
+    {"source": "case_demo_01", "target": "kp_demo_evidence", "type": "COVERS_KNOWLEDGE"},
+    {"source": "case_demo_01", "target": "ap_demo_hypothesis", "type": "ASSESSES"},
+    {"source": "case_demo_02", "target": "kp_demo_evidence", "type": "COVERS_KNOWLEDGE"},
+    {"source": "case_demo_02", "target": "kp_demo_differential", "type": "COVERS_KNOWLEDGE"},
+    {"source": "case_demo_02", "target": "ap_demo_justification", "type": "ASSESSES"},
+    {"source": "case_demo_01", "target": "case_demo_02", "type": "SIMILAR_CASE", "weight": 0.7},
+    {"source": "case_demo_01", "target": "case_demo_02", "type": "NEXT_CASE", "weight": 0.9},
+    {"source": "kp_demo_history", "target": "kp_demo_evidence", "type": "PREREQUISITE_FOR", "weight": 0.8},
+    {"source": "kp_demo_evidence", "target": "kp_demo_differential", "type": "EVIDENCE_FOR", "weight": 0.7}
+  ]
+}
